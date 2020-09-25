@@ -1,9 +1,11 @@
-import hobbyReducer from './hobby.reducer'
-import userReducer from './user.reducer'
 import { combineReducers } from 'redux'
+import currentTodoReducer from './currentTodo.reducer';
+import hobbyReducer from './hobby.reducer'
+import todosReducer from './todos.reducer';
 
 const rootReducer = combineReducers({
     hobby: hobbyReducer,
-    use: userReducer
+    todos: todosReducer,
+    currentTodo: currentTodoReducer,
 });
 export default rootReducer
