@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ToastAndroid } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, ToastAndroid, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewTodo } from '../actoins/todos.action';
 import TodosList from '../shares/components/Todos/TodosList';
 
+const windowWidth = Dimensions.get('window').width;
 
-const TodosScreen = () => {
+const TodosScreen = ({ navigation }) => {
     const [bodyTodo, setBodyTodo] = useState('')
     const todosList = useSelector(state => state.todos.list)
     const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const TodosScreen = () => {
         ToastAndroid.showWithGravity(
             'Add success',
             ToastAndroid.SHORT,
-            ToastAndroid.CENTER
+            ToastAndroid.TOP
         )
         const action = addNewTodo(newTodo);
         dispatch(action);
@@ -33,7 +33,9 @@ const TodosScreen = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.txtTitle}> TODOS LIST ({todosList.length}) </Text>
-            <TodosList todosList={todosList} />
+            <TodosList
+                navigation={navigation}
+                todosList={todosList} />
             <View style={styles.warpperBottom}>
                 <TextInput
                     placeholder='todo'
@@ -67,8 +69,7 @@ const styles = StyleSheet.create({
     },
     warpperBottom: {
         width: '100%',
-        alignItems: 'center'
-
+        alignItems: 'center',
     },
     input: {
         width: '100%',
@@ -83,10 +84,12 @@ const styles = StyleSheet.create({
         borderColor: '#95a5a6'
     },
     button: {
-        paddingVertical: 20,
-        paddingHorizontal: 40,
         backgroundColor: '#2c3e50',
-        borderRadius: 5
+        borderRadius: 5,
+        width: windowWidth - 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 70,
     },
     txtButton: {
         color: '#fff',

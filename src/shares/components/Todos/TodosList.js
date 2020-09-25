@@ -1,18 +1,54 @@
 import React, { useState } from 'react'
-import { Text, View, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View, FlatList, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native'
+import { useDispatch } from 'react-redux';
+import { getCurrentTodo, removeCurrentTodo, editCurrentTodo } from '../../../actoins/todos.action';
 
-const TodosList = ({ todosList }) => {
+const TodosList = ({ todosList, navigation }) => {
+    const dispatch = useDispatch();
+    const editItem = (item) => {
+        const action = getCurrentTodo(item.index)
+        dispatch(action);
+        navigation.navigate('TodosDetailScreen');
+    }
+
+    const removeItem = (index) => {
+        console.log('index', index);
+        const action = removeCurrentTodo(index)
+        dispatch(action);
+        ToastAndroid.showWithGravity(
+            'Delete success',
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER
+        )
+    }
+
+    const updateStatus = (item) => {
+        const status = item.item.status === 'Active' ? 'Done' : 'Active'
+        const newTodo = { ...item.item, status }
+        const action = editCurrentTodo(newTodo, item.index);
+        dispatch(action);
+    }
 
     const renderItem = (item) => {
         return (
             <View style={styles.item}>
-                <TouchableOpacity style={styles.btnBody}>
-                    <Text style={styles.txtItem}>{item.id}. {item.body}</Text>
+                <TouchableOpacity
+                    onPress={() => updateStatus(item)}
+                    style={[styles.btnBody,
+                    item.item.status === 'Active' ?
+                        { backgroundColor: '#7f8c8d' } :
+                        { backgroundColor: '#e67e22' }]
+                    }>
+                    <Text style={styles.txtItem}>{item.item.id}. {item.item.body}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.btnAction, { backgroundColor: '#f1c40f', marginRight: 10 }]}>
+                <TouchableOpacity
+                    onPress={() => editItem(item)}
+                    style={[styles.btnAction, { backgroundColor: '#f1c40f', marginRight: 10 }]}>
                     <Text style={styles.txtBtn}>Edit</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.btnAction, { backgroundColor: '#c0392b' }]}>
+                <TouchableOpacity
+                    onPress={() => removeItem(item.index)}
+                    style={[styles.btnAction, { backgroundColor: '#c0392b' }]}>
                     <Text style={styles.txtBtn}>Del</Text>
                 </TouchableOpacity>
             </View>
@@ -23,7 +59,7 @@ const TodosList = ({ todosList }) => {
         <FlatList
             style={{ marginVertical: 20, width: '100%' }}
             data={todosList}
-            renderItem={({ item }) => renderItem(item)}
+            renderItem={(item) => renderItem(item)}
             keyExtractor={item => item.id + ''}
         />
     )
@@ -37,11 +73,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         flexDirection: 'row',
         alignItems: 'center',
-
     },
     btnBody: {
         flex: 1,
-        backgroundColor: '#7f8c8d',
+
         paddingVertical: 10,
         paddingHorizontal: 5,
         borderRadius: 5,
