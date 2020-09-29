@@ -2,6 +2,8 @@ import {
     ADD_TODO, GET_CURRENT_TODO,
     EDIT_CURRENT_TODO,
     REMOVE_CURRENT_TODO,
+    SEARCH_TODOS,
+    FILTER_TODOS
 } from '../actoins/types'
 
 export const addNewTodo = (todo) => {
@@ -30,5 +32,19 @@ export const removeCurrentTodo = (index) => {
     return {
         type: REMOVE_CURRENT_TODO,
         index: index
+    }
+}
+
+export const searchTodos = (text) => {
+    return {
+        type: SEARCH_TODOS,
+        text: text
+    }
+}
+
+export const filterTodos = (status) => {
+    return {
+        type: FILTER_TODOS,
+        status: status
     }
 }
