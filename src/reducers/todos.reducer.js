@@ -7,7 +7,7 @@ import {
 } from '../actoins/types'
 
 const initialState = {
-    list: [{ "body": "1", "id": 4694, "status": "Active" }, { "body": "2", "id": 1603, "status": "Active" }, { "body": "3", "id": 3053, "status": "Active" }, { "body": "11", "id": 2382, "status": "Active" }],
+    list: [],
     current: null,
     listSearch: [],
     listFilterByStatus: []

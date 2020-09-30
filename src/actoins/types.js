@@ -4,3 +4,6 @@ export const EDIT_CURRENT_TODO = 'EDIT_CURRENT_TODO'
 export const REMOVE_CURRENT_TODO = 'REMOVE_CURRENT_TODO'
 export const SEARCH_TODOS = 'SEARCH_TODOS'
 export const FILTER_TODOS = 'FILTER_TODOS'
+
+
+export const GET_SHOES = 'GET_SHOES'
