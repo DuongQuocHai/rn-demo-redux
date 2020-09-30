@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Text, View, FlatList, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native'
 import { useDispatch } from 'react-redux';
-import { getCurrentTodo, removeCurrentTodo, editCurrentTodo } from '../../../actoins/todos.action';
+import { getCurrentTodo, removeCurrentTodo, editCurrentTodo } from '../../../actions/todos.action';
 
 const TodosList = ({ todosList, navigation }) => {
+    console.log('todosList: ', todosList);
     const dispatch = useDispatch();
     const editItem = (item) => {
         const action = getCurrentTodo(item.index)
@@ -22,24 +23,25 @@ const TodosList = ({ todosList, navigation }) => {
         )
     }
 
-    const updateStatus = (item) => {
-        const status = item.item.status === 'Active' ? 'Done' : 'Active'
-        const newTodo = { ...item.item, status }
-        const action = editCurrentTodo(newTodo, item.index);
-        dispatch(action);
-    }
+    // const updateStatus = (item) => {
+    //     const status = item.item.status === 'Active' ? 'Done' : 'Active'
+    //     const newTodo = { ...item.item, status }
+    //     const action = editCurrentTodo(newTodo, item.index);
+    //     dispatch(action);
+    // }
 
     const renderItem = (item) => {
+        console.log('item: ', item.item);
         return (
             <View style={styles.item}>
                 <TouchableOpacity
-                    onPress={() => updateStatus(item)}
+                    // onPress={() => updateStatus(item)}
                     style={[styles.btnBody,
-                    item.item.status === 'Active' ?
+                    item.item.completed ?
                         { backgroundColor: '#7f8c8d' } :
                         { backgroundColor: '#e67e22' }]
                     }>
-                    <Text style={styles.txtItem}>{item.item.id}. {item.item.body}</Text>
+                    <Text style={styles.txtItem}>{item.item.id}. {item.item.title}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => editItem(item)}

@@ -6,84 +6,28 @@ import {
     ToastAndroid,
     TextInput,
     TouchableOpacity,
-    Dimensions
+    Dimensions, StatusBar
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewTodo, searchTodos } from '../actoins/todos.action';
+import { fetchTodos } from '../actions/todos.action';
 import TodosList from '../shares/components/Todos/TodosList';
 
 const windowWidth = Dimensions.get('window').width;
 
 const TodosScreen = ({ navigation }) => {
-    const [bodyTodo, setBodyTodo] = useState('')
-    const [data, setData] = useState([]);
-    const [status, setStatus] = useState('Done');
-    const todosList = useSelector(state => state.todos.list)
-    // const listSearch = useSelector(state => state.todos.listSearch)
+    const data = useSelector(state => state.todos)
     const dispatch = useDispatch();
-    const randomId = () => {
-        return 1000 + Math.trunc(Math.random() * 9000)
-    }
 
-    const getData = () => {
-        setData(todosList);
-    }
     useEffect(() => {
-        getData();
-    }, [todosList])
+        dispatch(fetchTodos())
+        console.log('data: ', data)
+    }, [])
 
-    // const search = async (value) => {
-    //     setList(listSearch);
-    //     dispatch(searchTodos(value))
-    //     console.log('list search: ', listSearch);
-    // }
-
-    const handleAddTodo = () => {
-        const id = randomId();
-        const newTodo = {
-            id: id,
-            body: bodyTodo,
-            status: 'Active'
-        }
-        setBodyTodo('');
-        ToastAndroid.showWithGravity(
-            'Add success',
-            ToastAndroid.SHORT,
-            ToastAndroid.TOP
-        )
-        const action = addNewTodo(newTodo);
-        dispatch(action);
-    }
-
-
-
-    const searchTodos = (value) => {
-        setData(todosList);
-        var matchedTodos = data.filter((todo) => {
-            return (
-                todo.body.toLowerCase().indexOf(value.toLowerCase()) !== -1
-            );
-        })
-        setData(matchedTodos);
-    }
-
-    const filterTodos = (value) => {
-        setData(todosList);
-        console.log('data: ', data);
-        setStatus(status === 'Active' ? 'Done' : 'Active');
-        var matchedTodos = data.filter((todo) => {
-            console.log(todo.status)
-            console.log(status)
-            return todo.status.indexOf(value) !== -1;
-        })
-        setData(matchedTodos);
-    }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.txtTitle}> TODOS LIST ({data.length}) </Text>
-
-            <View style={styles.warpperButton}>
+            <Text style={styles.txtTitle}> TODOS LIST ({data.data ? data.data.length : 0}) </Text>
+            {/* <View style={styles.warpperButton}>
                 <TouchableOpacity
                     onPress={() => { filterTodos(status) }}
                     style={[styles.btn, status === 'Active' ? { backgroundColor: '#e67e22' } : { backgroundColor: 'grey' }]}>
@@ -94,7 +38,7 @@ const TodosScreen = ({ navigation }) => {
                     style={[styles.btn, { backgroundColor: '#130f40' }]}>
                     <Text style={styles.txtBtn}>Refresh</Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
             <TextInput
                 placeholder='Search'
                 style={styles.input}
@@ -102,13 +46,13 @@ const TodosScreen = ({ navigation }) => {
             />
             <TodosList
                 navigation={navigation}
-                todosList={data} />
+                todosList={data.data} />
             <View style={styles.warpperBottom}>
                 <TextInput
                     placeholder='Todo'
                     style={styles.input}
-                    value={bodyTodo}
-                    onChangeText={(value) => setBodyTodo(value)}
+                // value={bodyTodo}
+                // onChangeText={(value) => setBodyTodo(value)}
                 />
                 <TouchableOpacity
                     onPress={() => handleAddTodo()}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, ToastAndroid } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { editCurrentTodo } from '../actoins/todos.action';
+import { editCurrentTodo } from '../actions/todos.action';
 
 const windowWidth = Dimensions.get('window').width;
 const TodosDetailScreen = ({ navigation }) => {

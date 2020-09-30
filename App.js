@@ -2,10 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import store from './src/store/configure-store'
+import configureStore from './src/store/configure-store'
 import TodosScreen from './src/screens/Todos.screen'
 import TodosDetailScreen from './src/screens/TodosDetail.screen';
 
+const store = configureStore();
 const Stack = createStackNavigator();
 const App = () => {
   return (
