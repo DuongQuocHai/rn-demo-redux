@@ -9,7 +9,7 @@ import {
     Dimensions, StatusBar
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTodos } from '../actions/todos.action';
+import { fetchTodosList } from '../actions/todos.action';
 import TodosList from '../shares/components/Todos/TodosList';
 
 const windowWidth = Dimensions.get('window').width;
@@ -19,7 +19,7 @@ const TodosScreen = ({ navigation }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchTodos())
+        dispatch(fetchTodosList())
         console.log('data: ', data)
     }, [])
 

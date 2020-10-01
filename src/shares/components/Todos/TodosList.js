@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { getCurrentTodo, removeCurrentTodo, editCurrentTodo } from '../../../actions/todos.action';
 
 const TodosList = ({ todosList, navigation }) => {
-    console.log('todosList: ', todosList);
     const dispatch = useDispatch();
     const editItem = (item) => {
         const action = getCurrentTodo(item.index)
@@ -12,16 +11,16 @@ const TodosList = ({ todosList, navigation }) => {
         navigation.navigate('TodosDetailScreen');
     }
 
-    const removeItem = (index) => {
-        console.log('index', index);
-        const action = removeCurrentTodo(index)
-        dispatch(action);
-        ToastAndroid.showWithGravity(
-            'Delete success',
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER
-        )
-    }
+    // const removeItem = (index) => {
+    //     console.log('index', index);
+    //     const action = removeCurrentTodo(index)
+    //     dispatch(action);
+    //     ToastAndroid.showWithGravity(
+    //         'Delete success',
+    //         ToastAndroid.SHORT,
+    //         ToastAndroid.CENTER
+    //     )
+    // }
 
     // const updateStatus = (item) => {
     //     const status = item.item.status === 'Active' ? 'Done' : 'Active'
@@ -31,7 +30,6 @@ const TodosList = ({ todosList, navigation }) => {
     // }
 
     const renderItem = (item) => {
-        console.log('item: ', item.item);
         return (
             <View style={styles.item}>
                 <TouchableOpacity
@@ -44,12 +42,12 @@ const TodosList = ({ todosList, navigation }) => {
                     <Text style={styles.txtItem}>{item.item.id}. {item.item.title}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => editItem(item)}
+                    // onPress={() => editItem(item)}
                     style={[styles.btnAction, { backgroundColor: '#f1c40f', marginRight: 10 }]}>
                     <Text style={styles.txtBtn}>Edit</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => removeItem(item.index)}
+                    // onPress={() => removeItem(item.index)}
                     style={[styles.btnAction, { backgroundColor: '#c0392b' }]}>
                     <Text style={styles.txtBtn}>Del</Text>
                 </TouchableOpacity>
