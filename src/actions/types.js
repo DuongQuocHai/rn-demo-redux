@@ -1,0 +1,9 @@
+const TODOS = {
+    LOAD: 'TODOS_LOAD',
+    ADD: 'TODOS_ADD',
+    LOAD_SUCCESS: 'TODOS_LOAD_SUCCESS',
+    LOAD_FAIL: 'TODOS_LOAD_FAIL',
+}
+
+export { TODOS }
+
